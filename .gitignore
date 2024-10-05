@@ -519,3 +519,8 @@ $RECYCLE.BIN/
 *.zip
 samconfig.toml
 *.bkp
+
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*
