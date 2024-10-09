@@ -25,14 +25,17 @@ export default function Institution() {
         <Heading level={5}>Institution</Heading>
       </Flex>
       <Flex direction="row">
-        <View>
+        <View flex="1">
           <Heading level={6}>Accounts</Heading>
           <Accounts id={id} updateAccounts={updateAccounts}/>
         </View>
+        {/*
         <View>
           <Heading level={6}>Transactions</Heading>
           <Transactions id={id} accounts={accountMap}/>
         </View>
+        */}
+
       </Flex>
     </Flex>
   );
