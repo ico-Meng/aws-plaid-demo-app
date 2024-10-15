@@ -24,7 +24,7 @@ export default function Layout() {
           <Button onClick={() => logOut()}>Logout</Button>
         )}
       </nav>
-      <Heading level={2}>Plaid AWS Quickstart</Heading>
+      <Heading level={2}>Debt Away</Heading>
       <View>
         {route === 'authenticated' ? `Welcome ${user.signInDetails?.loginId}` : 'Please Login!'}
       </View>

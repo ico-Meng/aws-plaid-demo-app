@@ -4,7 +4,13 @@ import { Divider, Flex, Heading, View } from '@aws-amplify/ui-react';
 import Accounts from '../components/Accounts';
 import Transactions from '../components/Transactions';
 
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@aws-amplify/ui-react';
+
+
 export default function Institution() {
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -37,6 +43,8 @@ export default function Institution() {
         */}
 
       </Flex>
+      <Button onClick={() => navigate('/analyze')}
+        style={{position: 'fixed', bottom: '20px', right: '20px'}}>Next</Button>
     </Flex>
   );
 }

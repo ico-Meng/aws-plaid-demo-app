@@ -40,6 +40,7 @@ Amplify.configure({
       userPoolId: process.env.REACT_APP_COGNTIO_USERPOOL_ID,
       userPoolClientId: process.env.REACT_APP_COGNITO_CLIENT_ID,
       signUpVerificationMethod: 'code',
+      //authenticationFlowType: 'USER_PASSWORD_AUTH',
       loginWith: {
         oauth: {
           domain: process.env.REACT_APP_COGNITO_DOMAIN,
