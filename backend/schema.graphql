@@ -6,6 +6,11 @@ type Query {
   getItems(limit: Int, cursor: String): PaginatedItems!
   getAccounts(id: ID!): [Account!]!
   getTransactions(id: ID!, limit: Int, cursor: String): PaginatedTransactions!
+  getAnalyzeResult: AnalyzeResult!
+}
+
+type AnalyzeResult {
+  result: String!
 }
 
 type Item {
