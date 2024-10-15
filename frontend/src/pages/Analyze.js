@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { generateClient } from '@aws-amplify/api';
+import { getAnalyzeResult as GetAnalyzeResult } from '../graphql/queries';
 
 function Analyze() {
   const [analyzeResult, setAnalyzeResult] = useState('');
+  const [error, setError] = useState('');
   const client = generateClient();
   
   useEffect(() => {
@@ -11,23 +13,36 @@ function Analyze() {
   
   async function fetchAnalyzeResult() {
     try {
-      const response = await client.get({
-        apiName: 'MyApiName',
-        path: '/v1/analyze'
+      const response = await client.graphql({
+        query: `
+          query GetAnalyzeResult {
+            getAnalyzeResult {
+              result
+            }
+          }
+        `
       });
-      setAnalyzeResult(response.result);
+      setAnalyzeResult(response.data.getAnalyzeResult.result);
+      setError(''); // Clear any previous errors
     } catch (error) {
       console.error('Error fetching analyze result:', error);
-      console.error('Error details:', error.response);
-      setAnalyzeResult('Error fetching result');
+      setAnalyzeResult('');
+      if (error.errors && error.errors.length > 0) {
+        setError(`Error: ${error.errors[0].message}`);
+      } else {
+        setError('An unexpected error occurred');
+      }
     }
   }
-
 
   return (
     <div>
       <h1>Start analyzing...</h1>
-      <p>{analyzeResult}</p>
+      {error ? (
+        <p style={{color: 'red'}}>{error}</p>
+      ) : (
+        <p>{analyzeResult}</p>
+      )}
     </div>
   );
 }

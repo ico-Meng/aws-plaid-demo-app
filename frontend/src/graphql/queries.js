@@ -39,3 +39,9 @@ export const getTransactions = `query GetTransactions($id: ID!, $limit: Int, $cu
     cursor
   }
 }`;
+
+export const getAnalyzeResult = `query GetAnalyzeResult {
+  getAnalyzeResult {
+    result
+  }
+}`;
