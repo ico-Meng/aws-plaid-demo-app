@@ -42,7 +42,11 @@ def handle_graphql_query():
                     "path": ["getAnalyzeResult"]
                 }
             ],
-            "data": None
+            "data": {
+                "getAnalyzeResult": {
+                    "result": "Resolver error occurred during lambda analysis."
+                }
+            }
         }
         return Response(
             status_code=500,
