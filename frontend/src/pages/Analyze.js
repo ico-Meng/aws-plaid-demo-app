@@ -68,8 +68,9 @@ function Analyze() {
           zIndex: 1000,
           padding: '8px 17px',
           cursor: 'pointer',
-          right: '20px',
+          left: '20px',
           textAlign: 'center',
+          backgroundColor: 'white',
         }}>
         Back
       </Button>
