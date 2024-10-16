@@ -25,7 +25,7 @@ export default function Institution() {
   }
 
   return (
-    <Flex direction="column">
+    <Flex direction="column" className="content-wrapper" style={{paddingBottom: '100px'}}>
       <Divider/>
       <Flex direction="row">
         <Heading level={5}>Institution</Heading>
