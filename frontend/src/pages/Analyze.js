@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { generateClient } from '@aws-amplify/api';
+import { useNavigate } from 'react-router-dom';
+import { Button, Flex, Heading, View } from '@aws-amplify/ui-react';
 import { getAnalyzeResult as GetAnalyzeResult } from '../graphql/queries';
 
 function Analyze() {
   const [analyzeResult, setAnalyzeResult] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
   const client = generateClient();
   
   useEffect(() => {
@@ -36,6 +39,7 @@ function Analyze() {
   }
 
   return (
+    /*
     <div>
       <h1>Start analyzing...</h1>
       {error ? (
@@ -43,7 +47,23 @@ function Analyze() {
       ) : (
         <p>{analyzeResult}</p>
       )}
+      <Button onClick={() => navigate(-1)} className="fixed-button">
+        Back
+      </Button>
     </div>
+    */
+    <Flex direction="column" className="content-wrapper">
+    <Heading level={1}>Start analyzing...</Heading>
+    <View>
+      {error ? (
+        <p style={{color: 'red'}}>{error}</p>
+      ) : (
+        <p>{analyzeResult}</p>
+      )}
+    </View>
+      <Button onClick={() => navigate(-1)}
+        style={{position: 'fixed', bottom: '20px', right: '20px'}}>Back</Button>
+  </Flex>
   );
 }
 

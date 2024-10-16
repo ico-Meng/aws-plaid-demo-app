@@ -27,19 +27,19 @@ function App() {
             <Route
               path="/institution/:id"
               element={
-                <RequireAuth>
+                //<RequireAuth>
                   <Institution />
-                </RequireAuth>
+                //</RequireAuth>
               }
             />
             <Route
               path="/analyze"
               element={
-                <RequireAuth>
+              //  <RequireAuth>
                   <Analyze />
-                </RequireAuth>
+              //  </RequireAuth>
               }
-            />
+            />  
             <Route path="/login" element={<Login />} />
           </Route>
         </Routes>

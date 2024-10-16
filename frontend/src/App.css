@@ -1,6 +1,7 @@
 #root {
   text-align: center;
   margin: 1.2rem;
+  position: relative;
 }
 
 nav {
@@ -14,4 +15,21 @@ nav {
   display: flex;
   justify-content: center;
   margin-top: 2rem;
+}
+
+.content-wrapper {
+  max-height: calc(100vh - 100px);
+  /* Adjust based on your header/footer height */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  padding-bottom: 60px;
+  /* Ensure space for the fixed button */
+}
+
+.fixed-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  /* Ensure the button is above other content */
 }
