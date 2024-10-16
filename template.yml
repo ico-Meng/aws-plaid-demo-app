@@ -640,19 +640,30 @@ Resources:
     Properties:
       ApiId: !GetAtt GraphQLApi.ApiId
       FieldName: getAnalyzeResult
-      TypeName: Query
-      DataSourceName: !GetAtt DynamoDBDataSource.Name
-      RequestMappingTemplate: |
-        {
-          "version": "2024-10-15",
-          "operation": "Invoke",
-          "payload": {}  # Empty payload
+      Code: |-
+        export function request(ctx) {
+          return {};
         }
-      ResponseMappingTemplate: |
-        #if($ctx.error)
-          $util.error($ctx.error.message, $ctx.error.type)
-        #end
-        $util.toJson($ctx.result)
+
+        export function response(ctx) {
+          return ctx.prev.result;
+        }
+      Kind: PIPELINE
+      PipelineConfig:
+        Functions:
+          - !GetAtt GetAnalyzeResultFunctionConfiguration.FunctionId
+      Runtime:
+        Name: APPSYNC_JS
+        RuntimeVersion: "1.0.0"
+      TypeName: Query
+
+  GetAnalyzeResultFunctionConfiguration:
+    Type: "AWS::AppSync::FunctionConfiguration"
+    Properties:
+      ApiId: !GetAtt GraphQLApi.ApiId
+      CodeS3Location: backend/resolvers/Query.getAnalyzeResult.js
+      DataSourceName: !GetAtt DynamoDBDataSource.Name
+      Name: GET_ANALYZE_RESULT
       Runtime:
         Name: APPSYNC_JS
         RuntimeVersion: "1.0.0"
