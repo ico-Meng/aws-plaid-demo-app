@@ -43,8 +43,19 @@ export default function Institution() {
         */}
 
       </Flex>
-      <Button onClick={() => navigate('/analyze')}
-        style={{position: 'fixed', bottom: '20px', right: '20px'}}>Next</Button>
+      <Button onClick={() => navigate('/analyze')} 
+      style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        zIndex: 1000,
+        padding: '8px 17px',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        textAlign: 'center',
+      }}>
+        Next
+       </Button>
     </Flex>
   );
 }

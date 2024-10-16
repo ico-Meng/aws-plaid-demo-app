@@ -62,7 +62,17 @@ function Analyze() {
       )}
     </View>
       <Button onClick={() => navigate(-1)}
-        style={{position: 'fixed', bottom: '20px', right: '20px'}}>Back</Button>
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          zIndex: 1000,
+          padding: '8px 17px',
+          cursor: 'pointer',
+          right: '20px',
+          textAlign: 'center',
+        }}>
+        Back
+      </Button>
   </Flex>
   );
 }
