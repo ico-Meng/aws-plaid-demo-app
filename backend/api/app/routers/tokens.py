@@ -47,6 +47,82 @@ router = Router()
 dynamodb: DynamoDBServiceResource = boto3.resource("dynamodb", config=constants.BOTO3_CONFIG)
 
 
+@router.get("/layer")
+@tracer.capture_method(capture_response=False)
+def create_link_token_layer() -> Dict[str, str]:
+    user_id: str = utils.authorize_request(router)
+
+    logger.append_keys(user_id=user_id)
+    tracer.put_annotation(key="UserId", value=user_id)
+
+    request_body = router.current_event.json_body;
+    user_id = request_body.get("phone_number");
+    request = LinkTokenCreateRequest(
+        products=[Products("layer")],
+        client_name="plaidaws",
+        country_codes=[CountryCode("US")],
+        language="en",
+        webhook=WEBHOOK_URL,
+        user=LinkTokenCreateRequestUser(client_user_id=user_id),
+    )
+
+    client = utils.get_plaid_client()
+
+    try:
+        response: LinkTokenCreateResponse = client.link_token_create(request)
+    except plaid.ApiException:
+        logger.exception("Unable to create link token")
+        raise InternalServerError("Failed to create link token")
+
+    return {"link_token": response.link_token}
+
+# backend/api/app/routers/tokens.py
+
+@router.post("/exchange")
+@tracer.capture_method(capture_response=False)
+def exchange_public_token_layer() -> Response:
+    user_id: str = utils.authorize_request(router)
+
+    logger.append_keys(user_id=user_id)
+    tracer.put_annotation(key="UserId", value=user_id)
+
+    request_body = router.current_event.json_body
+    public_token: Union[None, str] = request_body.get("public_token")
+    if not public_token:
+        raise BadRequestError("Public token not found in request")
+
+    metadata: Dict[str, str] = request_body.get("metadata", {})
+    if not metadata:
+        raise BadRequestError("Metadata not found in request")
+
+    institution = metadata.get("institution", {})
+    institution_id = institution.get("institution_id")
+    if not institution_id:
+        raise BadRequestError("Institution ID not found in request")
+
+    request = ItemPublicTokenExchangeRequest(public_token=public_token)
+
+    client = utils.get_plaid_client()
+
+    try:
+        response: ItemPublicTokenExchangeResponse = client.item_public_token_exchange(request)
+    except plaid.ApiException:
+        logger.exception("Unable to exchange public token")
+        raise InternalServerError("Failed to exchange public token")
+
+    # Handle the response (store access token, etc.)
+    access_token: str = response.access_token
+    item_id: str = response.item_id
+
+    # You can now store the access token securely in your database
+    # (e.g., DynamoDB) or perform any other necessary actions.
+
+    return Response(
+        status_code=200,
+        content_type=content_types.APPLICATION_JSON,
+        body=json.dumps({"access_token": access_token, "item_id": item_id}),
+    )
+
 @router.get("/")
 @tracer.capture_method(capture_response=False)
 def create_link_token() -> Dict[str, str]:

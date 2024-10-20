@@ -39,19 +39,6 @@ function Analyze() {
   }
 
   return (
-    /*
-    <div>
-      <h1>Start analyzing...</h1>
-      {error ? (
-        <p style={{color: 'red'}}>{error}</p>
-      ) : (
-        <p>{analyzeResult}</p>
-      )}
-      <Button onClick={() => navigate(-1)} className="fixed-button">
-        Back
-      </Button>
-    </div>
-    */
     <Flex direction="column" className="content-wrapper">
     <Heading level={1}>Start analyzing...</Heading>
     <View>

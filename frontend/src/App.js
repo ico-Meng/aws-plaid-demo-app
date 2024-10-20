@@ -6,6 +6,7 @@ import Institution from './pages/Institution';
 import Layout from './components/Layout';
 import RequireAuth from './RequireAuth';
 import Analyze from './pages/Analyze';
+import Layer from './pages/Layer';
 
 import './App.css';
 
@@ -38,6 +39,14 @@ function App() {
                 <RequireAuth>
                   <Analyze />
                 </RequireAuth>
+              }
+            />  
+            <Route
+              path="/layer"
+              element={
+                //<RequireAuth>
+                  <Layer />
+                //</RequireAuth>
               }
             />  
             <Route path="/login" element={<Login />} />
