@@ -11,7 +11,7 @@ function Layer() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/api/layer', { phone_number: phoneNumber });
+      const response = await axios.post('/api/tokens/layer', { phone_number: phoneNumber });
       setVerificationId(response.data.verification_id);
       setError('');
     } catch (err) {
