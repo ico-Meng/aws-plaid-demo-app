@@ -11,7 +11,9 @@ function Layer() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/api/tokens/layer', { phone_number: phoneNumber });
+      console.log("Before axios call.");
+      const response = await axios.post('/api/layer', { phone_number: phoneNumber });
+      console.log("After axios call.");
       setVerificationId(response.data.verification_id);
       setError('');
     } catch (err) {
@@ -21,7 +23,8 @@ function Layer() {
 
   const onSuccess = async (public_token, metadata) => {
     try {
-      const response = await axios.post('/api/tokens/exchange', {
+      console.log("onSuccess is calling...");
+      const response = await axios.post('/api/exchange', {
         public_token,
         metadata,
       });
